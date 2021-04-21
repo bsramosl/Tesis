@@ -318,3 +318,67 @@ class EliminarOrganismo(DeleteView):
         else:
             return redirect('ProsPy:LUOrganismo')
 
+
+
+
+
+class LUReactor(TemplateView):
+    template_name = 'tabla_reactor.html'
+
+class Reactorlista(ListView):
+    model = Reactor
+    context_object_name = 'reactor'
+
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            return HttpResponse(serialize('json', self.model.objects.all()), 'aplication/json')
+        else:
+            return redirect('ProsPy:LUReactor')
+
+class GuardarReactor(CreateView):
+    model = Organismo
+    form_class = OrganismoForm
+    template_name = 'registro_modal_organismo.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} guardado correctamente'
+                error = 'No hay error'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se pudo guardar correctamente'
+                error = 'no se pudo guardar'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('ProsPy:LUOrganismo')
+
+class EditarReactor(UpdateView):
+    model = Organismo
+    form_class = OrganismoForm
+    template_name = 'editar_organismo_modal.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST, instance=self.get_object())
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} actualizado correctamente'
+                error = 'No hay error'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se pudo actualizar correctamente'
+                error = form.errors
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('ProsPy:LUOrganismo')

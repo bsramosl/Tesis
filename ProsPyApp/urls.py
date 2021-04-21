@@ -29,6 +29,13 @@ urlpatterns = [
     path('EditarOrganismo/<int:pk>/', login_required(views.EditarOrganismo.as_view()), name='EditarOrganismo'),
     path('EliminarOrganismo/<int:pk>/', login_required(views.EliminarOrganismo.as_view()), name='EliminarOrganismo'),
 
+    path('LUReactor/', login_required(views.LUReactor.as_view()), name='LUReactor'),
+    path('Reactorlista/', login_required(views.Reactorlista.as_view()), name='Reactorlista'),
+    path('GuardarReactor/', login_required(views.GuardarReactor.as_view()), name='GuardarReactor'),
+    path('EditarReactor/<int:pk>/', login_required(views.EditarReactor.as_view()), name='EditarReactor'),
+
+
+
     path('CrearUsuario/', views.CrearUsuario.as_view(), name=' CrearUsuario'),
     path('CambiarContraseña', login_required(views.CambiarContraseña), name='CambiarContraseña'),
     path('EditarUsuario/<int:pk>/', login_required(views.EditarUsuario.as_view()), name='EditarUsuario'),

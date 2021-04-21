@@ -87,3 +87,10 @@ class OrganismoForm(forms.ModelForm):
     class Meta:
         model = Organismo
         fields = '__all__'
+
+
+class ReactorForm(forms.ModelForm):
+
+    class Meta:
+        model = Reactor
+        fields = '__all__'

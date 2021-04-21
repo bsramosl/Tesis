@@ -4,6 +4,7 @@ $(document).ready(function () {
     listarUsuario()
     listarTipo()
     listarOrganismo()
+    listarReactor()
 });
 
 function listarUsuario() {
@@ -258,9 +259,11 @@ function eliminarorganismo(pk) {
 }
 
 
+
+
 function listarReactor() {
     $.ajax({
-        url: "/ProsPy/Reactor/",
+        url: "/ProsPy/Reactorlista/",
         type: "get",
         dataType: "json",
         success: function (response) {
@@ -299,6 +302,11 @@ function listarReactor() {
         }
     });
 }
+
+
+
+
+
 
 
 function listarBatch() {

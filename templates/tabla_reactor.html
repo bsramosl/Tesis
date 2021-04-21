@@ -28,6 +28,15 @@
                     <div id="tablareactor_wrapper" class="dataTables_wrapper dt-bootstrap4">
                         <table id="tablareactor" class="table">
                             <thead>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8"></div>
+                                <div class="col-xs-6 col-md-4">
+                                    <button type="submit" class="btn btn-block btn-outline-info"
+                                            onclick="abrir_modal_guardar('{% url 'ProsPy:GuardarReactor' %}');">
+                                        Registrar
+                                    </button>
+                                </div>
+                            </div>
                             <tr>
                                 <th><i class="fa fa-bullhorn"></i>#</th>
                                 <th><i class="fa  "></i> Marca</th>
@@ -39,6 +48,7 @@
                                 <th><i class="fa  "></i> Foto4</th>
                                 <th><i class="fa  "></i> Estado</th>
                                 <th><i class="fa  "></i> TipoReactor</th>
+                                <th><i class="fa  "></i> Opciones</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -49,6 +59,14 @@
                 </div>
             </div>
         </div>
+    </div>
+
+
+    <div class="modal fade" id="registro_modal">
+    </div>
+    <div class="modal fade" id="eliminar_modal">
+    </div>
+    <div class="modal fade" id="editar_modal">
     </div>
 
 
