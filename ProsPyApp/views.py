@@ -36,14 +36,13 @@ class Admin(TemplateView):
         activo = User.objects.filter(is_active=True).count()
         inactivo = User.objects.filter(is_active=False).count()
         nuevo = User.objects.filter(date_joined__gt=date.today()).count()
-
+        organismo = Organismo.objects.count()
         context = super().get_context_data(**kwargs)
         context['activos'] = activo
         context['inactivos'] = inactivo
         context['usuarios'] = activo + inactivo
         context['nuevo'] = nuevo
-
-
+        context['organismo'] = organismo
         return context
 
 
@@ -175,4 +174,147 @@ class EliminarUsuario(DeleteView):
             return response
         else:
             return redirect('ProsPy:LUsuarioLista')
+
+
+
+class LUTipoReactor(TemplateView):
+    template_name = 'tabla_tiporeactor.html'
+
+class TipoReactorlista(ListView):
+    model = TipoReactor
+    context_object_name = 'tiporeactor'
+
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            return HttpResponse(serialize('json', self.model.objects.all()), 'aplication/json')
+        else:
+            return redirect('ProsPy:LUTipoReactor')
+
+class GuardarTipo(CreateView):
+    model = TipoReactor
+    form_class = TipoReactorForm
+    template_name = 'registro_modal_tipo.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} guardado correctamente'
+                error = 'No hay error'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se pudo guardar correctamente'
+                error = 'no se pudo guardar'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('ProsPy:LUTipoReactor')
+
+class EditarTipo(UpdateView):
+    model = TipoReactor
+    form_class = TipoReactorForm
+    template_name = 'editar_tiporeactor_modal.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST, instance=self.get_object())
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} actualizado correctamente'
+                error = 'No hay error'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se pudo actualizar correctamente'
+                error = form.errors
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('ProsPy:LUTipoReactor')
+
+
+
+class LUOrganismo(TemplateView):
+    template_name = 'tabla_organismo.html'
+
+class Organismolista(ListView):
+    model = Organismo
+    context_object_name = 'organismo'
+
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            return HttpResponse(serialize('json', self.model.objects.all()), 'aplication/json')
+        else:
+            return redirect('ProsPy:LUOrganismo')
+
+class GuardarOrganismo(CreateView):
+    model = Organismo
+    form_class = OrganismoForm
+    template_name = 'registro_modal_organismo.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} guardado correctamente'
+                error = 'No hay error'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se pudo guardar correctamente'
+                error = 'no se pudo guardar'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('ProsPy:LUOrganismo')
+
+class EditarOrganismo(UpdateView):
+    model = Organismo
+    form_class = OrganismoForm
+    template_name = 'editar_organismo_modal.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST, instance=self.get_object())
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} actualizado correctamente'
+                error = 'No hay error'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se pudo actualizar correctamente'
+                error = form.errors
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('ProsPy:LUOrganismo')
+
+class EliminarOrganismo(DeleteView):
+    model = Organismo
+    template_name = 'eliminar_organismo_modal.html'
+
+    def delete(self, request, *args, **kwargs):
+        if request.is_ajax():
+            dat = self.get_object()
+            dat.delete()
+            dat.save()
+            mensaje = f'{self.model.__name__} Eliminado correctamente'
+            error = 'No hay error'
+            response = JsonResponse({'mensaje': mensaje, 'error': error})
+            response.status_code = 201
+            return response
+        else:
+            return redirect('ProsPy:LUOrganismo')
 

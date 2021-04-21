@@ -86,33 +86,13 @@ function abrir_modal_reactor(url, usuario) {
 }
 
 
-function cerrar_modal_reactor() {
-    $('#reactor_modal').modal('hide');
+function cerrar_modal_guardar() {
+    $('#registro_modal').modal('hide');
 }
 
-function abrir_modal_eliminarcabatch(url) {
-    $('#eliminar_modal').load(url, function () {
+function abrir_modal_guardar(url) {
+    $('#registro_modal').load(url, function () {
         $(this).modal('show');
     });
 }
 
-function abrir_modal_editartiporeactor(url) {
-    $('#editartipo_modal').load(url, function () {
-        $(this).modal('show');
-    });
-}
-
-function cerrar_modal_editartiporeactor() {
-    $('#editartipo_modal').modal('hide');
-}
-
-
-function abrir_modal_editarcabatch(url) {
-    $('#editar_modal').load(url, function () {
-        $(this).modal('show');
-    });
-}
-
-function cerrar_modal_editarcabatch() {
-    $('#editar_modal').modal('hide');
-}

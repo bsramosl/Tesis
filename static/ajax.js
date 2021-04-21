@@ -3,9 +3,7 @@ var $ = jQuery.noConflict();
 $(document).ready(function () {
     listarUsuario()
     listarTipo()
-    listarBatch()
     listarOrganismo()
-    listarReactor()
 });
 
 function listarUsuario() {
@@ -99,9 +97,10 @@ function eliminar(pk) {
     });
 }
 
+
 function listarTipo() {
     $.ajax({
-        url: "/ProsPy/TipoReactor/",
+        url: "/ProsPy/TipoReactorlista/",
         type: "get",
         dataType: "json",
         success: function (response) {
@@ -109,14 +108,13 @@ function listarTipo() {
                 $('#tablatipo').DataTable().destroy();
             }
             $('#tablatipo tbody').html("");
-            console.log(response)
             for (let i = 0; i < response.length; i++) {
                 let fila = '<tr>';
                 fila += '<td>' + (i + 1) + '</td>>';
                 fila += '<td>' + response[i]["fields"]['descripcion'] + '</td>>';
                 fila += '<td>' + response[i]["fields"]['especificaciontecnica'] + '</td>>';
                 fila += '<td>' + response[i]["fields"]['tiporeactor'] + '</td>>';
-                fila += '<td><button type="button" class="btn btn-primary btn-xs" onclick="abrir_modal_editartiporeactor(\'/ProsPy/EditarTipoReactor/' + response[i]['pk'] + '/\');"><i class="fa fa-pencil"></i></button></td>>';
+                fila += '<td><button type="button" class="btn btn-primary btn-xs" onclick="abrir_modal_editar(\'/ProsPy/EditarTipo/' + response[i]['pk'] + '/\');"><i class="fa fa-pencil"></i></button> <button type="button" class="btn btn-danger btn-xs" onclick="abrir_modal_eliminar(\'/ProsPy/EliminarUsuario/' + response[i]['pk'] + '/\');"><i class="fa fa-trash-o "></i></button></td>>';
                 fila += '</tr>';
                 $('#tablatipo tbody').append(fila);
             }
@@ -136,9 +134,45 @@ function listarTipo() {
     });
 }
 
+function registrartiporeactor() {
+    $.ajax({
+        data: $('#form_reactor').serialize(),
+        url: $('#form_reactor').attr('action'),
+        type: $('#form_reactor').attr('method'),
+        success: function (response) {
+            notificacionSuccess(response.mensaje);
+            cerrar_modal_guardar();
+            listarTipo();
+        },
+        error: function (error) {
+            notificacionError(error.responseJSON.mensaje);
+            mostrarErroresCreacion(error);
+        }
+    });
+}
+
+function editar() {
+    $.ajax({
+        data: $('#form_editar').serialize(),
+        url: $('#form_editar').attr('action'),
+        type: $('#form_editar').attr('method'),
+        success: function (response) {
+            notificacionSuccess(response.mensaje);
+            cerrar_modal_editar();
+            listarTipo();
+        },
+        error: function (error) {
+            notificacionError(error.responseJSON.mensaje);
+            mostrarErroresCreacion(error);
+        }
+    });
+}
+
+
+
 function listarOrganismo() {
     $.ajax({
-        url: "/ProsPy/Organismo/",
+        url: "/ProsPy/Organismolista/",
         type: "get",
         dataType: "json",
         success: function (response) {
@@ -151,6 +185,7 @@ function listarOrganismo() {
                 fila += '<td>' + (i + 1) + '</td>>';
                 fila += '<td>' + response[i]["fields"]['nombrecientifico'] + '</td>>';
                 fila += '<td>' + response[i]["fields"]['genero'] + '</td>>';
+                fila += '<td><button type="button" class="btn btn-primary btn-xs" onclick="abrir_modal_editar(\'/ProsPy/EditarOrganismo/' + response[i]['pk'] + '/\');"><i class="fa fa-pencil"></i></button> <button type="button" class="btn btn-danger btn-xs" onclick="abrir_modal_eliminar(\'/ProsPy/EliminarOrganismo/' + response[i]['pk'] + '/\');"><i class="fa fa-trash-o "></i></button></td>';
                 fila += '</tr>';
                 $('#tablaorganismo tbody').append(fila);
             }
@@ -165,10 +200,63 @@ function listarOrganismo() {
             }).buttons().container().appendTo('#tablaorganismo_wrapper .col-md-6:eq(0)');
         }, error: function (error) {
             console.log(error);
-
         }
     });
 }
+
+function registrarorganismo() {
+    $.ajax({
+        data: $('#form_reactor').serialize(),
+        url: $('#form_reactor').attr('action'),
+        type: $('#form_reactor').attr('method'),
+        success: function (response) {
+            notificacionSuccess(response.mensaje);
+            cerrar_modal_guardar();
+            listarOrganismo();
+        },
+        error: function (error) {
+            notificacionError(error.responseJSON.mensaje);
+            mostrarErroresCreacion(error);
+        }
+    });
+}
+
+function editar() {
+    $.ajax({
+        data: $('#form_editar').serialize(),
+        url: $('#form_editar').attr('action'),
+        type: $('#form_editar').attr('method'),
+        success: function (response) {
+            notificacionSuccess(response.mensaje);
+            cerrar_modal_editar();
+            listarOrganismo();
+        },
+        error: function (error) {
+            notificacionError(error.responseJSON.mensaje);
+            mostrarErroresCreacion(error);
+            activarBoton();
+        }
+    });
+}
+
+function eliminarorganismo(pk) {
+    $.ajax({
+        data: {
+            csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
+        },
+        url: '/ProsPy/EliminarOrganismo/' + pk + '/',
+        type: 'post',
+        success: function (response) {
+            notificacionSuccess(response.mensaje);
+            listarOrganismo();
+            cerrar_modal_eliminar();
+        },
+        error: function (error) {
+            notificacionError(error.responseJSON.mensaje);
+        }
+    });
+}
+
 
 function listarReactor() {
     $.ajax({
@@ -295,24 +383,6 @@ function editarcabatch() {
             notificacionError(error.responseJSON.mensaje);
             mostrarErroresCreacion(error);
             activarBoton();
-        }
-    });
-}
-
-function eliminar(pk) {
-    $.ajax({
-        data: {
-            csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
-        },
-        url: '/ProsPy/EliminarUsuario/' + pk + '/',
-        type: 'post',
-        success: function (response) {
-            notificacionSuccess(response.mensaje);
-            listarBatch();
-            cerrar_modal_eliminar();
-        },
-        error: function (error) {
-            notificacionError(error.responseJSON.mensaje);
         }
     });
 }

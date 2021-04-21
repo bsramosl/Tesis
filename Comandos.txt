@@ -5,6 +5,7 @@ instalar nummpy************pip install numpy
 instalar symp *************pip install sympy
 instala ipaithon*********** pip install IPython
 pip install mysqlclient
+pip install django-haystack        'haystack',
 
 
 

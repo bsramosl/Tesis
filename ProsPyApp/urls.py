@@ -18,6 +18,16 @@ urlpatterns = [
     path('LUsuarioLista/', login_required(views.LUsuarioLista.as_view()), name='LUsuarioLista'),
     path('UsuarioLista/', login_required(views.UsuarioLista.as_view()), name='UsuarioLista'),
 
+    path('LUTipoReactor/', login_required(views.LUTipoReactor.as_view()), name='LUTipoReactor'),
+    path('TipoReactorlista/', login_required(views.TipoReactorlista.as_view()), name='TipoReactorlista'),
+    path('GuardarTipo/', login_required(views.GuardarTipo.as_view()), name='GuardarTipo'),
+    path('EditarTipo/<int:pk>/', login_required(views.EditarTipo.as_view()), name='EditarTipo'),
+
+    path('LUOrganismo/', login_required(views.LUOrganismo.as_view()), name='LUOrganismo'),
+    path('Organismolista/', login_required(views.Organismolista.as_view()), name='Organismolista'),
+    path('GuardarOrganismo/', login_required(views.GuardarOrganismo.as_view()), name='GuardarOrganismo'),
+    path('EditarOrganismo/<int:pk>/', login_required(views.EditarOrganismo.as_view()), name='EditarOrganismo'),
+    path('EliminarOrganismo/<int:pk>/', login_required(views.EliminarOrganismo.as_view()), name='EliminarOrganismo'),
 
     path('CrearUsuario/', views.CrearUsuario.as_view(), name=' CrearUsuario'),
     path('CambiarContraseña', login_required(views.CambiarContraseña), name='CambiarContraseña'),

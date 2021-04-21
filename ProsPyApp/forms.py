@@ -67,3 +67,23 @@ class UsuForm(ModelForm):
     @property
     def is_staff(self):
         return self.is_superuser
+
+
+class TipoReactorForm(forms.ModelForm):
+    descripcion = forms.CharField(label='Descripcion:',widget=forms.TextInput(attrs={'class': 'form-sma form-sma-titu', 'float': 'left'}))
+    especificaciontecnica = forms.CharField(label='Especificacion:',widget=forms.TextInput(attrs={'class': 'form-sma form-sma-titu', 'float': 'left'}))
+    tiporeactor = forms.CharField(label='Tipo:',widget=forms.TextInput(attrs={'class': 'form-sma form-sma-titu', 'float': 'left'}))
+
+    class Meta:
+        model = TipoReactor
+        fields = '__all__'
+
+
+
+class OrganismoForm(forms.ModelForm):
+    nombrecientifico = forms.CharField(label='Nombre Cient:',widget=forms.TextInput(attrs={'class': 'form-sma form-sma-titu', 'float': 'left'}))
+    genero = forms.CharField(label='Genero:',widget=forms.TextInput(attrs={'class': 'form-sma form-sma-titu', 'float': 'left'}))
+
+    class Meta:
+        model = Organismo
+        fields = '__all__'
