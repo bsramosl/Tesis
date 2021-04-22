@@ -34,10 +34,10 @@ class Reactor(models.Model):
     marca = models.CharField(max_length=50, blank=False, null=False)
     modelo = models.CharField(max_length=50, blank=False, null=False)
     especificaciontecnica = models.TextField(max_length=200, blank=False, null=False)
-    foto1 = models.ImageField(upload_to='static/img/')
-    foto2 = models.ImageField(upload_to='static/img/')
-    foto3 = models.ImageField(upload_to='static/img/')
-    foto4 = models.ImageField(upload_to='static/img/')
+    foto1 = models.ImageField('Imagen',upload_to='img/',blank=True, null=True)
+    foto2 = models.ImageField('Imagen',upload_to='img/',blank=True, null=True)
+    foto3 = models.ImageField('Imagen',upload_to='img/',blank=True, null=True)
+    foto4 = models.ImageField('Imagen',upload_to='img/',blank=True, null=True)
     estado = models.BooleanField(default=True)
     tiporeactor = models.ForeignKey(TipoReactor,on_delete=models.CASCADE)
 
@@ -76,3 +76,28 @@ class CaBatch(models.Model):
 
     def __str__(self):
         return self.titulo
+
+
+class CaPrediccion(models.Model):
+    titulo = models.CharField(max_length=20, blank=False, null=False)
+    descripcion = models.TextField(max_length=200, blank=False, null=False)
+    x = models.FloatField(max_length=10, blank=False, null=False)
+    v = models.FloatField(max_length=10, blank=False, null=False)
+    so = models.FloatField(max_length=10, blank=False, null=False)
+    umax = models.FloatField(max_length=10, blank=False, null=False)
+    y = models.FloatField(max_length=10, blank=False, null=False)
+    ysf = models.FloatField(max_length=10, blank=False, null=False)
+    tb = models.FloatField(max_length=10, blank=False, null=False)
+    reactor = models.ForeignKey(Reactor, on_delete=models.CASCADE)
+    organismo = models.ForeignKey(Organismo, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'caprediccion'
+        verbose_name_plural = 'caprediccions'
+        ordering = ['titulo']
+
+    def __str__(self):
+        return self.titulo
+
+

@@ -34,7 +34,10 @@ urlpatterns = [
     path('GuardarReactor/', login_required(views.GuardarReactor.as_view()), name='GuardarReactor'),
     path('EditarReactor/<int:pk>/', login_required(views.EditarReactor.as_view()), name='EditarReactor'),
 
-
+    path('LUCaBatch/', login_required(views.LUCaBatch.as_view()), name='LUCaBatch'),
+    path('CaBatchlista/', login_required(views.CaBatchlista.as_view()), name='CaBatchlista'),
+    path('GuardarCaBatch/', login_required(views.GuardarCaBatch.as_view()), name='GuardarCaBatch'),
+    path('EditarCaCaBatch/<int:pk>/', login_required(views.EditarCaCaBatch.as_view()), name='EditarCaCaBatch'),
 
     path('CrearUsuario/', views.CrearUsuario.as_view(), name=' CrearUsuario'),
     path('CambiarContraseña', login_required(views.CambiarContraseña), name='CambiarContraseña'),

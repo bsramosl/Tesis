@@ -54,6 +54,7 @@ function velocidadinicial() {
         console.log( $('#Vf').val())
         console.log( $('#V').val())
         document.getElementById('V0').value = vel0
+
 }
 
 function velocidad() {

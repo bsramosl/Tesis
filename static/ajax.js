@@ -5,6 +5,7 @@ $(document).ready(function () {
     listarTipo()
     listarOrganismo()
     listarReactor()
+    listarBatch()
 });
 
 function listarUsuario() {
@@ -170,7 +171,6 @@ function editar() {
 }
 
 
-
 function listarOrganismo() {
     $.ajax({
         url: "/ProsPy/Organismolista/",
@@ -259,8 +259,6 @@ function eliminarorganismo(pk) {
 }
 
 
-
-
 function listarReactor() {
     $.ajax({
         url: "/ProsPy/Reactorlista/",
@@ -283,7 +281,7 @@ function listarReactor() {
                 fila += '<td>' + response[i]["fields"]['foto4'] + '</td>>';
                 fila += '<td>' + response[i]["fields"]['estado'] + '</td>>';
                 fila += '<td>' + response[i]["fields"]['tiporeactor'] + '</td>>';
-
+                fila += '<td><button type="button" class="btn btn-primary btn-xs" onclick="abrir_modal_editar(\'/ProsPy/EditarReactor/' + response[i]['pk'] + '/\');"><i class="fa fa-pencil"></i></button> <button type="button" class="btn btn-danger btn-xs" onclick="abrir_modal_eliminar(\'/ProsPy/EliminarOrganismo/' + response[i]['pk'] + '/\');"><i class="fa fa-trash-o "></i></button></td>';
                 fila += '</tr>';
                 $('#tablareactor tbody').append(fila);
             }
@@ -303,21 +301,58 @@ function listarReactor() {
     });
 }
 
+function registrarreactor() {
+    var data = new FormData($('#form_reactor').get(0));
+    $.ajax({
+        data: data,
+        url: $('#form_reactor').attr('action'),
+        type: $('#form_reactor').attr('method'),
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            notificacionSuccess(response.mensaje);
+            cerrar_modal_guardar();
+            listarReactor();
+        },
+        error: function (error) {
+            notificacionError(error.responseJSON.mensaje);
+            mostrarErroresCreacion(error);
+        }
+    });
+}
 
-
-
-
+function editarreactor() {
+    var data = new FormData($('#form_editar').get(0));
+    $.ajax({
+        data: data,
+        url: $('#form_editar').attr('action'),
+        type: $('#form_editar').attr('method'),
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            notificacionSuccess(response.mensaje);
+            cerrar_modal_editar();
+            listarReactor();
+        },
+        error: function (error) {
+            notificacionError(error.responseJSON.mensaje);
+            mostrarErroresCreacion(error);
+            activarBoton();
+        }
+    });
+}
 
 
 function listarBatch() {
     $.ajax({
-        url: "/ProsPy/CaBatch/",
+        url: "/ProsPy/CaBatchlista/",
         type: "get",
         dataType: "json",
         success: function (response) {
             if ($.fn.DataTable.isDataTable('#tablabatch')) {
-                $('#tablabatch').DataTable().destroy();
-            }
+                $('#tablabatch').DataTable().destroy();            }
             $('#tablabatch tbody').html("");
             for (let i = 0; i < response.length; i++) {
                 let fila = '<tr>';
@@ -339,7 +374,7 @@ function listarBatch() {
                 fila += '<td>' + response[i]["fields"]['organismo'] + '</td>>';
                 fila += '<td>' + response[i]["fields"]['reactor'] + '</td>>';
                 fila += '<td>' + response[i]["fields"]['usuario'] + '</td>>';
-                fila += '<td>' + response[i]["fields"]['usuario'] + '</td>>';
+                fila += '<td><button type="button" class="btn btn-primary btn-xs" onclick="abrir_modal_editar(\'/ProsPy/EditarCaCaBatch/' + response[i]['pk'] + '/\');"><i class="fa fa-pencil"></i></button> <button type="button" class="btn btn-danger btn-xs" onclick="abrir_modal_eliminar(\'/ProsPy/EliminarOrganismo/' + response[i]['pk'] + '/\');"><i class="fa fa-trash-o "></i></button></td>';
                 fila += '</tr>';
                 $('#tablabatch tbody').append(fila);
             }
@@ -359,7 +394,7 @@ function listarBatch() {
     });
 }
 
-function registrarcareactor() {
+function registrarcabatch() {
     $.ajax({
         data: $('#form_reactor').serialize(),
         url: $('#form_reactor').attr('action'),
@@ -376,7 +411,6 @@ function registrarcareactor() {
     });
 }
 
-
 function editarcabatch() {
     $.ajax({
         data: $('#form_editar').serialize(),
@@ -384,30 +418,13 @@ function editarcabatch() {
         type: $('#form_editar').attr('method'),
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listarBatch();
             cerrar_modal_editar();
+            listarBatch();
         },
         error: function (error) {
             notificacionError(error.responseJSON.mensaje);
             mostrarErroresCreacion(error);
             activarBoton();
-        }
-    });
-}
-
-function editartiporeactor() {
-    $.ajax({
-        data: $('#form_editar').serialize(),
-        url: $('#form_editar').attr('action'),
-        type: $('#form_editar').attr('method'),
-        success: function (response) {
-            notificacionSuccess(response.mensaje);
-            listarTipo();
-            cerrar_modal_editartiporeactor()
-        },
-        error: function (error) {
-            notificacionError(error.responseJSON.mensaje);
-            mostrarErroresCreacion(error);
         }
     });
 }

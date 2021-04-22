@@ -37,12 +37,17 @@ class Admin(TemplateView):
         inactivo = User.objects.filter(is_active=False).count()
         nuevo = User.objects.filter(date_joined__gt=date.today()).count()
         organismo = Organismo.objects.count()
+        tiporeact = TipoReactor.objects.count()
+        reactor = Reactor.objects.count()
         context = super().get_context_data(**kwargs)
         context['activos'] = activo
         context['inactivos'] = inactivo
         context['usuarios'] = activo + inactivo
         context['nuevo'] = nuevo
         context['organismo'] = organismo
+        context['tiporeact'] = tiporeact
+        context['reactor'] = reactor
+
         return context
 
 
@@ -81,7 +86,6 @@ class LogoutUsuario(RedirectView):
 class LUsuarioLista(TemplateView):
     template_name = 'Usuario_Admin.html'
 
-
 class UsuarioLista(ListView):
     model = User
     context_object_name = 'usuarios'
@@ -94,7 +98,6 @@ class UsuarioLista(ListView):
             return HttpResponse(serialize('json', self.get_queryset()), 'aplication/json')
         else:
             return redirect('ProsPy:LUsuarioLista')
-
 
 class CrearUsuario(CreateView):
     model = User
@@ -117,7 +120,6 @@ class CrearUsuario(CreateView):
         messages.success(self.request, 'Se ha registrado con exito')
         return response
 
-
 def CambiarContraseña(request):
     if request.method == 'POST':
         form = ContraseñaForm(request.user, request.POST)
@@ -131,7 +133,6 @@ def CambiarContraseña(request):
     else:
         form = ContraseñaForm(request.user)
     return render(request, "config_usu.html", {'form': form})
-
 
 class EditarUsuario(UpdateView):
     model = User
@@ -156,7 +157,6 @@ class EditarUsuario(UpdateView):
                 return response
         else:
             return redirect('ProsPy:LUsuarioLista')
-
 
 class EliminarUsuario(DeleteView):
     model = User
@@ -336,9 +336,72 @@ class Reactorlista(ListView):
             return redirect('ProsPy:LUReactor')
 
 class GuardarReactor(CreateView):
-    model = Organismo
-    form_class = OrganismoForm
-    template_name = 'registro_modal_organismo.html'
+    model = Reactor
+    form_class = ReactorForm
+    template_name = 'registro_modal_reactor.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST,request.FILES)
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} guardado correctamente'
+                error = 'No hay error'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se pudo guardar correctamente'
+                error = 'no se pudo guardar'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('ProsPy:LUOrganismo')
+
+class EditarReactor(UpdateView):
+    model = Reactor
+    form_class = ReactorForm
+    template_name = 'editar_reactor_modal.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST,request.FILES,instance=self.get_object())
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} actualizado correctamente'
+                error = 'No hay error'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se pudo actualizar correctamente'
+                error = 'No se pudo editar'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('ProsPy:LUReactor')
+
+
+
+class LUCaBatch(TemplateView):
+    template_name = 'tabla_careactor.html'
+
+class CaBatchlista(ListView):
+    model = CaBatch
+    context_object_name = 'reactor'
+
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            return HttpResponse(serialize('json', self.model.objects.all()), 'aplication/json')
+        else:
+            return redirect('ProsPy:LUCaBatch')
+
+class GuardarCaBatch(CreateView):
+    model = CaBatch
+    form_class = CaBatchForm
+    template_name = 'registro_cabatch_modal.html'
 
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
@@ -357,12 +420,12 @@ class GuardarReactor(CreateView):
                 response.status_code = 400
                 return response
         else:
-            return redirect('ProsPy:LUOrganismo')
+            return redirect('PosPy:ModeloReact')
 
-class EditarReactor(UpdateView):
-    model = Organismo
-    form_class = OrganismoForm
-    template_name = 'editar_organismo_modal.html'
+class EditarCaCaBatch(UpdateView):
+    model = CaBatch
+    form_class = CaBatchForm
+    template_name = 'editar_cabatch_modal.html'
 
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
@@ -381,4 +444,5 @@ class EditarReactor(UpdateView):
                 response.status_code = 400
                 return response
         else:
-            return redirect('ProsPy:LUOrganismo')
+            return redirect('ProsPy:LUCaBatch')
+

@@ -1,149 +1,94 @@
-$("#Y").bind("keyup keydown change", function () {
-    concentracioncelulas()
-});
-$("#Ks").bind("keyup keydown change", function () {
-    concentracion()
+$("#X").bind("keyup keydown change", function () {
+    tb()
+    densidadcelularfinal()
+    grafica()
 });
 $("#Umax").bind("keyup keydown change", function () {
-    concentracion()
-});
-$("#ms").bind("keyup keydown change", function () {
-    dencidad()
-    concentracioncelulas()
-});
-$("#F").bind("keyup keydown change", function () {
-    velocidad()
-    dencidad()
-    concentracion()
-    concentracioncelulas()
-});
-$("#t").bind("keyup keydown change", function () {
-    velocidad()
+    tb()
     grafica()
-});
-$("#V0").bind("keyup keydown change", function () {
-    velocidadfinal()
-
 });
 $("#V").bind("keyup keydown change", function () {
-    velocidadfinal()
-    datox()
-    masa()
-    velocidadinicial()
-});
-$("#Vf").bind("keyup keydown change", function () {
-    dencidad()
-    concentracion()
+    tb()
+    densidadcelularfinal()
     grafica()
-    concentracioncelulas()
-    velocidadinicial()
 });
 $("#So").bind("keyup keydown change", function () {
-    concentracioncelulas()
-});
-$("#N").bind("keyup keydown change", function () {
-    datox()
-});
-$("#X").bind("keyup keydown change", function () {
-    masa()
-});
-
-function velocidadinicial() {
-    /*Calculo velocidad Inicial */
-        vel0 = $('#Vf').val() - $('#V').val()
-        console.log( $('#Vf').val())
-        console.log( $('#V').val())
-        document.getElementById('V0').value = vel0
-}
-
-function velocidad() {
-    if ($('#F').val() != 0 && $('#t').val() != 0) {
-        vel = $('#F').val() * $('#t').val()
-        document.getElementById('V').value = vel
-    }
-    velocidadfinal()
-    datox()
-    masa()
-}
-
-function velocidadfinal() {
-    if ($('#V0').val() != 0 && $('#V').val() != 0) {
-        Vf = parseFloat($('#V0').val()) + parseFloat($('#V').val())
-        document.getElementById('Vf').value = Vf
-    }
-    dencidad()
-    concentracion()
+    tb()
     grafica()
-    concentracioncelulas()
-}
+});
+$("#Y").bind("keyup keydown change", function () {
+    tb()
+    densidadcelularfinal()
+    grafica()
+});
+$("#Sf").bind("keyup keydown change", function () {
+    densidadcelularparcial()
+    grafica()
+});
+$("#Tb").bind("keyup keydown change", function () {
+    tb()
+    densidadcelularfinal()
+    grafica()
+});
 
-function dencidad() {
-    /*Calculo dencidad de cultivo */
-    if ($('#F').val() && $('#Vf').val() != 0) {
-        var d = $('#F').val() / $('#Vf').val()
-        D = d.toFixed(3)
-        document.getElementById('cont2').innerHTML = ' ' + D
+
+function tb() {
+    if ($('#Umax').val() != 0 && $('#Y').val() != 0 && $('#So').val() != 0 && $('#X').val() != 0 && $('#V').val() != 0) {
+        tbtiempo = 1 / $('#Umax').val()
+        X0 = ($('#X').val() / $('#V').val())
+        tbtiempo1 = parseFloat($('#Y').val() / X0)
+        tbtiempo2 = parseFloat(1 + tbtiempo1 * $('#So').val())
+        tbtiempo4 = parseFloat(tbtiempo * Math.log(tbtiempo2)).toFixed(2)
+        document.getElementById('cont1').innerHTML = ' ' + tbtiempo4
+        document.getElementById('Tb').value = tbtiempo4
     }
 }
 
-function masa() {
-    /*Calculo Masa de celulas */
-    if ($('#X').val() != 0 && $('#V').val() != 0) {
-        N = $('#X').val() * $('#V').val()
-        document.getElementById('N').value = N.toFixed(3)
-        document.getElementById('cont3').innerHTML = ' ' + N.toFixed(3)
+function densidadcelularfinal() {
+    if ($('#Umax').val() != 0 && $('#X').val() != 0 && $('#V').val() != 0 && $('#Tb').val() != 0) {
+        X0 = ($('#X').val() / $('#V').val())
+        dsf = X0 * Math.exp($('#Umax').val() * $('#Tb').val())
+        document.getElementById('cont2').innerHTML = ' ' + dsf.toFixed(2)
     }
 }
 
-function concentracion() {
+function densidadcelularparcial() {
+    if ($('#Umax').val() != 0 && $('#Y').val() != 0 && $('#So').val() != 0 && $('#X').val() != 0 && $('#V').val() != 0 && $('#Sf').val() != 0) {
+        porsentcons = (($('#So').val() - $('#Sf').val()) * 100) / $('#So').val()
+        consumo = ($('#So').val() * 70) / 100
+        tbtiempo = 1 / $('#Umax').val()
+        X0 = ($('#X').val() / $('#V').val())
+        tbtiempo1 = parseFloat($('#Y').val() / X0)
+        tbtiempo2 = parseFloat(1 + tbtiempo1 * ($('#So').val() - ($('#So').val() - consumo)))
+        tbtiempo4 = parseFloat(tbtiempo * Math.log(tbtiempo2)).toFixed(2)
 
-    if ($('#F').val() && $('#Vf').val() != 0 && $('#Ks').val() != 0 && $('#Umax').val() != 0) {
-        var d = $('#F').val() / $('#Vf').val()
-        D = d.toFixed(3);
-        S = (D * $('#Ks').val()) / ($('#Umax').val() - D)
-        document.getElementById('cont1').innerHTML = ' ' + S.toFixed(3)
+        dsf = X0 * Math.exp($('#Umax').val() * tbtiempo4)
+        document.getElementById('cont4').innerHTML = ' ' + dsf.toFixed(2)
+        document.getElementById('cont3').innerHTML = ' ' + porsentcons + ' % :'
+        document.getElementById('cont5').innerHTML = ' ' + tbtiempo4
+        document.getElementById('cont6').innerHTML = ' ' + porsentcons + ' % :'
+
+
     }
-}
 
-function datox() {
-
-    if ($('#N').val() != 0 && $('#V').val() != 0) {
-        X = $('#N').val() / $('#V').val()
-        document.getElementById('X').value = X
-    }
-    masa()
-}
-
-function concentracioncelulas() {
-    /*Calculo Concentracion de celulas */
-    if ($('#So').val() != 0 && $('#Y').val() != 0 && $('#ms').val() != 0 && $('#F').val() != 0 && $('#Vf').val() != 0) {
-        var d = $('#F').val() / $('#Vf').val()
-        D = d.toFixed(3);
-        x1 = parseFloat(D * $('#So').val());
-        x2 = parseFloat(D / $('#Y').val());
-        x3 = parseFloat(x2) + parseFloat($('#ms').val());
-        x0 = x1 / x3;
-        document.getElementById('X').value = x0
-        document.getElementById('cont4').innerHTML = '  ' + x0.toFixed(3)
-    }
-    masa()
 }
 
 
 function grafica() {
-
-    if ($('#V').val() != 0 && $('#t').val() != 0 && $('#Vf').val() != 0) {
-        var tiempo = $('#t').val() * 60;
-        var ace = ($('#Vf').val() - $('#V0').val()) / tiempo;
-        var velocidad = [];
-        var ti = [];
-        for (var i = 0; i <= tiempo; i++) {
-            ve = (parseFloat(ace) * i) + parseFloat($('#V0').val());
-            ti.push(i);
-            velocidad.push(ve);
-        }
-        graf(velocidad, ti);
+    var tiempo = [];
+    var densidad = [];
+    if ($('#Tb').val() != 0) {
+        tiempo.push(parseFloat(document.getElementById('cont1').innerHTML));
+        tiempo.push(parseFloat(document.getElementById('cont2').innerHTML));
     }
+    if ($('#Sf').val() != 0) {
+        densidad.push(parseFloat(document.getElementById('cont5').innerHTML));
+        densidad.push(parseFloat(document.getElementById('cont4').innerHTML));
+    }
+    if (tiempo.length != 0) {
+        graf(densidad, tiempo);
+    }
+
 }
 
 document.getElementById('predicctiempo').innerHTML = "<img src='/static/img/batch.jpg'>";
@@ -155,12 +100,11 @@ function graf(datat, ti) {
         },
 
         yAxis: {
-            title: {text: 'Velocidad'}
+            title: {text: 'Densidad'}
         },
 
         xAxis: {
-            title: {text: 'Tiempo'},
-            categorías: ti
+            title: {text: 'Tiempo'}
         },
 
         plotOptions: {
@@ -171,10 +115,9 @@ function graf(datat, ti) {
                 pointStart: 0
             }
         },
-
         series: [{
-            name: 'Velocidad',
-            data: datat
+            name: 'Densidad',
+            data: [ti, datat]
         }],
 
         responsive: {

@@ -94,3 +94,45 @@ class ReactorForm(forms.ModelForm):
     class Meta:
         model = Reactor
         fields = '__all__'
+
+class CaBatchForm(forms.ModelForm):
+    titulo = forms.CharField(label='Titulo',widget=forms.TextInput(attrs={'class': 'form-sma form-sma-titu', 'float': 'left'}))
+    descripcion = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-sma form-sma-titu', "rows": 5, "cols": 20}))
+    y = forms.FloatField(label='Y', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    ks = forms.FloatField(label='Ks', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    umax = forms.FloatField(label='Umax', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    ms = forms.FloatField(label='Ms', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    f = forms.FloatField(label='F', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    t = forms.FloatField(label='T', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    v0 = forms.FloatField(label='V0', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    v = forms.FloatField(label='V', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    vf = forms.FloatField(label='Vf', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    so = forms.FloatField(label='So', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    n = forms.FloatField(label='N', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    x = forms.FloatField(label='X', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    reactor = forms.ModelChoiceField(queryset=Reactor.objects.all(),widget=forms.Select(attrs={'class':'form-sma form-select'}))
+    organismo = forms.ModelChoiceField(queryset=Organismo.objects.all(),widget=forms.Select(attrs={'class':'form-sma form-select'}))
+    usuario = forms.ModelChoiceField(queryset=User.objects.all(),widget=forms.Select(attrs={ 'class':'form-sma form-select'}))
+
+    class Meta:
+        model = CaBatch
+        fields = '__all__'
+
+
+class PrediccionForm(forms.ModelForm):
+    titulo = forms.CharField(label='Titulo',widget=forms.TextInput(attrs={'class': 'form-sma form-sma-titu', 'float': 'left'}))
+    descripcion = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-sma form-sma-titu', "rows": 5, "cols": 20}))
+    x = forms.FloatField(label='X', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    v = forms.FloatField(label='V', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    so = forms.FloatField(label='So', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    umax = forms.FloatField(label='Umax', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    y = forms.FloatField(label='Y', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    sf = forms.FloatField(label='Sf', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    tb = forms.FloatField(label='Tb', widget=forms.TextInput(attrs={'class': 'form-sma'}))
+    reactor = forms.ModelChoiceField(queryset=Reactor.objects.all(),widget=forms.Select(attrs={'class':'form-sma form-select'}))
+    organismo = forms.ModelChoiceField(queryset=Organismo.objects.all(),widget=forms.Select(attrs={'class':'form-sma form-select'}))
+    usuario = forms.ModelChoiceField(queryset=User.objects.all(),widget=forms.Select(attrs={ 'class':'form-sma form-select'}))
+
+    class Meta:
+        model = CaPrediccion
+        fields = '__all__'

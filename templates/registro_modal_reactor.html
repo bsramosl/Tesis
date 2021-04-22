@@ -7,17 +7,16 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <form id="form_reactor" method="POST" action="{% url 'ProsPy:GuardarReactor' %}">
+        <form id="form_reactor" method="POST" enctype="multipart/form-data" action="{% url 'ProsPy:GuardarReactor' %}">
             {% csrf_token %}
             <div class="modal-body">
-                <div id="error_reactor">
+                <div id="error_registro">
                     {{ form.as_p }}
-
                 </div>
             </div>
             <div class="modal-footer justify-content-between ">
-                <button type="button" class="btn btn-default" onclick="cerrar_modal_reactor();">Cancelar</button>
-                <button id="boton_creacion" type="button" class="btn btn-primary" onclick="registrarcareactor();">Aceptar</button>
+                <button type="button" class="btn btn-default" onclick="cerrar_modal_guardar();">Cancelar</button>
+                <button id="boton_creacion" type="button" class="btn btn-primary" onclick="registrarreactor();">Aceptar</button>
             </div>
         </form>
     </div>
@@ -26,7 +25,7 @@
 
 <style type="text/css">
     label {
-        width: 90px;
+        width: 110px;
         float: left;
         text-align: left
     }
