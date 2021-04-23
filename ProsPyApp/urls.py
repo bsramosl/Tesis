@@ -22,6 +22,7 @@ urlpatterns = [
     path('TipoReactorlista/', login_required(views.TipoReactorlista.as_view()), name='TipoReactorlista'),
     path('GuardarTipo/', login_required(views.GuardarTipo.as_view()), name='GuardarTipo'),
     path('EditarTipo/<int:pk>/', login_required(views.EditarTipo.as_view()), name='EditarTipo'),
+    path('EliminarTipo/<int:pk>/', login_required(views.EliminarTipo.as_view()), name='EliminarTipo'),
 
     path('LUOrganismo/', login_required(views.LUOrganismo.as_view()), name='LUOrganismo'),
     path('Organismolista/', login_required(views.Organismolista.as_view()), name='Organismolista'),
@@ -51,5 +52,7 @@ urlpatterns = [
     path('CambiarContraseña', login_required(views.CambiarContraseña), name='CambiarContraseña'),
     path('EditarUsuario/<int:pk>/', login_required(views.EditarUsuario.as_view()), name='EditarUsuario'),
     path('EliminarUsuario/<int:pk>/', login_required(views.EliminarUsuario.as_view()), name='EliminarUsuario'),
+
+    path('EjerciciosLista/', login_required(views.EjerciciosLista.as_view()), name='EjerciciosLista'),
 
 ]

@@ -36,10 +36,12 @@ function listarUsuario() {
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print"],
+                "buttons2": ["copy", "csv", "excel", "pdf", "print"],
                 "paging": true,
                 "ordering": true,
                 "info": true,
+                "whiteSpace": 'normal',
+
             }).buttons().container().appendTo('#tablausuario_wrapper .col-md-6:eq(0)');
         }, error: function (error) {
             console.log(error);
@@ -117,7 +119,7 @@ function listarTipo() {
                 fila += '<td>' + response[i]["fields"]['descripcion'] + '</td>>';
                 fila += '<td>' + response[i]["fields"]['especificaciontecnica'] + '</td>>';
                 fila += '<td>' + response[i]["fields"]['tiporeactor'] + '</td>>';
-                fila += '<td><button type="button" class="btn btn-primary btn-xs" onclick="abrir_modal_editar(\'/ProsPy/EditarTipo/' + response[i]['pk'] + '/\');"><i class="fa fa-pencil"></i></button> <button type="button" class="btn btn-danger btn-xs" onclick="abrir_modal_eliminar(\'/ProsPy/EliminarUsuario/' + response[i]['pk'] + '/\');"><i class="fa fa-trash-o "></i></button></td>>';
+                fila += '<td><button type="button" class="btn btn-primary btn-xs" onclick="abrir_modal_editar(\'/ProsPy/EditarTipo/' + response[i]['pk'] + '/\');"><i class="fa fa-pencil"></i></button> <button type="button" class="btn btn-danger btn-xs" onclick="abrir_modal_eliminar(\'/ProsPy/EliminarTipo/' + response[i]['pk'] + '/\');"><i class="fa fa-trash-o "></i></button></td>>';
                 fila += '</tr>';
                 $('#tablatipo tbody').append(fila);
             }
@@ -167,6 +169,24 @@ function editar() {
         error: function (error) {
             notificacionError(error.responseJSON.mensaje);
             mostrarErroresCreacion(error);
+        }
+    });
+}
+
+function eliminartipo(pk) {
+    $.ajax({
+        data: {
+            csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
+        },
+        url: '/ProsPy/EliminarTipo/' + pk + '/',
+        type: 'post',
+        success: function (response) {
+            notificacionSuccess(response.mensaje);
+            listarTipo();
+            cerrar_modal_eliminar();
+        },
+        error: function (error) {
+            notificacionError(error.responseJSON.mensaje);
         }
     });
 }
@@ -354,7 +374,7 @@ function eliminarreactor(pk) {
         type: 'post',
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listarOrganismo();
+            listarReactor();
             cerrar_modal_eliminar();
         },
         error: function (error) {
@@ -371,7 +391,8 @@ function listarBatch() {
         dataType: "json",
         success: function (response) {
             if ($.fn.DataTable.isDataTable('#tablabatch')) {
-                $('#tablabatch').DataTable().destroy();            }
+                $('#tablabatch').DataTable().destroy();
+            }
             $('#tablabatch tbody').html("");
             for (let i = 0; i < response.length; i++) {
                 let fila = '<tr>';
@@ -453,7 +474,7 @@ function eliminarcabatch(pk) {
         type: 'post',
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listarOrganismo();
+            listarBatch();
             cerrar_modal_eliminar();
         },
         error: function (error) {
@@ -463,7 +484,6 @@ function eliminarcabatch(pk) {
 }
 
 
-
 function listarPrediccion() {
     $.ajax({
         url: "/ProsPy/CaPrediccionlista/",
@@ -471,7 +491,8 @@ function listarPrediccion() {
         dataType: "json",
         success: function (response) {
             if ($.fn.DataTable.isDataTable('#tablaprediccion')) {
-                $('#tablaprediccion').DataTable().destroy();            }
+                $('#tablaprediccion').DataTable().destroy();
+            }
             $('#tablaprediccion tbody').html("");
             for (let i = 0; i < response.length; i++) {
                 let fila = '<tr>';
@@ -552,7 +573,7 @@ function eliminarcaprediccion(pk) {
         type: 'post',
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listarOrganismo();
+            listarPrediccion();
             cerrar_modal_eliminar();
         },
         error: function (error) {

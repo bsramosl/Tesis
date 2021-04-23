@@ -238,6 +238,22 @@ class EditarTipo(UpdateView):
         else:
             return redirect('ProsPy:LUTipoReactor')
 
+class EliminarTipo(DeleteView):
+    model = TipoReactor
+    template_name = 'eliminar_tipo_modal.html'
+
+    def delete(self, request, pk):
+        if request.is_ajax():
+            dat = TipoReactor.objects.get(id=pk)
+            dat.delete()
+            mensaje = f'{self.model.__name__} Eliminado correctamente'
+            error = 'No hay error'
+            response = JsonResponse({'mensaje': mensaje, 'error': error})
+            response.status_code = 201
+            return response
+        else:
+            return redirect('ProsPy:LUTipoReactor')
+
 
 
 class LUOrganismo(TemplateView):
@@ -555,3 +571,7 @@ class EliminarCaPrediccion(DeleteView):
         else:
             return redirect('ProsPy:LUCaPrediccion')
 
+
+class EjerciciosLista(ListView):
+    model = CaPrediccion
+    template_name = 'ejercicios.html'

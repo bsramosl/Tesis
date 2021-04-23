@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Inicio
+{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+{% block content %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Ejercicios</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+
+                        {% if object_list %}
+                            {% for prediccion in object_list %}
+                                <div class="col-md-4">
+                                    <!-- Widget: user widget style 1 -->
+                                    <div class="card card-widget widget-user shadow">
+                                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                                        <div class="widget-user-header bg-info">
+                                            <h3 class="widget-user-username"><font
+                                                    style="vertical-align: inherit;"><font
+                                                    style="vertical-align: inherit;">Titulo: {{ prediccion.titulo }}</font></font>
+                                            </h3>
+                                            <h5 class="widget-user-desc"><font style="vertical-align: inherit;"><font
+                                                    style="vertical-align: inherit;">Tipo Reactor: {{ prediccion.reactor.tiporeactor.tiporeactor}}</font></font>
+                                            </h5>
+                                        </div>
+                                        <div class="widget-user-image">
+                                            <img class="img-circle elevation-2" src="{{ prediccion.reactor.foto1.url }}"
+                                                 alt="Avatar de usuario">
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="row">
+                                                <div class="col-sm-4 border-right">
+                                                    <div class="description-block">
+                                                        <h5 class="description-header"><font
+                                                                style="vertical-align: inherit;"><font
+                                                                style="vertical-align: inherit;">Reactor</font></font></h5>
+                                                        <span class="description-text"><font
+                                                                style="vertical-align: inherit;"><font
+                                                                style="vertical-align: inherit;">{{ prediccion.reactor }}</font></font></span>
+                                                    </div>
+                                                    <!-- /.description-block -->
+                                                </div>
+                                                <!-- /.col -->
+                                                <div class="col-sm-4 border-right">
+                                                    <div class="description-block">
+                                                        <h5 class="description-header"><font
+                                                                style="vertical-align: inherit;"><font
+                                                                style="vertical-align: inherit;">Organismo</font></font>
+                                                        </h5>
+                                                        <span class="description-text"><font
+                                                                style="vertical-align: inherit;"><font
+                                                                style="vertical-align: inherit;">{{ prediccion.organismo.nombrecientifico }}</font></font></span>
+                                                    </div>
+                                                    <!-- /.description-block -->
+                                                </div>
+                                                <!-- /.col -->
+                                                <div class="col-sm-4">
+                                                    <div class="description-block">
+                                                        <h5 class="description-header"><font
+                                                                style="vertical-align: inherit;"><font
+                                                                style="vertical-align: inherit;">35</font></font></h5>
+                                                        <span class="description-text"><font
+                                                                style="vertical-align: inherit;"><font
+                                                                style="vertical-align: inherit;">PRODUCTOS</font></font></span>
+                                                    </div>
+                                                    <!-- /.description-block -->
+                                                </div>
+                                                <!-- /.col -->
+                                            </div>
+                                            <!-- /.row -->
+                                        </div>
+                                    </div>
+                                    <!-- /.widget-user -->
+                                </div>
+
+                            {% endfor %}
+                        {% else %}
+                            <h1>No hay datos</h1>
+                        {% endif %}
+
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+
+{% endblock %}
+{% block extrajs %}
+
+{% endblock %}
