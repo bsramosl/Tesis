@@ -575,3 +575,14 @@ class EliminarCaPrediccion(DeleteView):
 class EjerciciosLista(ListView):
     model = CaPrediccion
     template_name = 'ejercicios.html'
+
+    def get_context_data(self, **kwargs):
+        activo = User.objects.filter(is_active=True).count()
+        inactivo = User.objects.filter(is_active=False).count()
+        nuevo = User.objects.filter(date_joined__gt=date.today()).count()
+        organismo = Organismo.objects.count()
+        tiporeact = TipoReactor.objects.count()
+        reactor = Reactor.objects.count()
+        context = super().get_context_data(**kwargs)
+        context['activos'] = activo
+        return context
