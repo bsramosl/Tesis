@@ -305,11 +305,11 @@ class EliminarOrganismo(DeleteView):
     model = Organismo
     template_name = 'eliminar_organismo_modal.html'
 
-    def delete(self, request, *args, **kwargs):
+
+    def delete(self, request, pk):
         if request.is_ajax():
-            dat = self.get_object()
+            dat = Organismo.objects.get(id = pk)
             dat.delete()
-            dat.save()
             mensaje = f'{self.model.__name__} Eliminado correctamente'
             error = 'No hay error'
             response = JsonResponse({'mensaje': mensaje, 'error': error})
@@ -317,8 +317,6 @@ class EliminarOrganismo(DeleteView):
             return response
         else:
             return redirect('ProsPy:LUOrganismo')
-
-
 
 
 
@@ -380,6 +378,22 @@ class EditarReactor(UpdateView):
                 response = JsonResponse({'mensaje': mensaje, 'error': error})
                 response.status_code = 400
                 return response
+        else:
+            return redirect('ProsPy:LUReactor')
+
+class EliminarReactor(DeleteView):
+    model = Reactor
+    template_name = 'eliminar_reactor_modal.html'
+
+    def delete(self, request, pk):
+        if request.is_ajax():
+            dat = Reactor.objects.get(id = pk)
+            dat.delete()
+            mensaje = f'{self.model.__name__} Eliminado correctamente'
+            error = 'No hay error'
+            response = JsonResponse({'mensaje': mensaje, 'error': error})
+            response.status_code = 201
+            return response
         else:
             return redirect('ProsPy:LUReactor')
 
@@ -445,4 +459,99 @@ class EditarCaCaBatch(UpdateView):
                 return response
         else:
             return redirect('ProsPy:LUCaBatch')
+
+class EliminarCaCaBatch(DeleteView):
+    model = CaBatch
+    template_name = 'eliminar_cabatch_modal.html'
+
+    def delete(self, request, pk):
+        if request.is_ajax():
+            dat = CaBatch.objects.get(id=pk)
+            dat.delete()
+            mensaje = f'{self.model.__name__} Eliminado correctamente'
+            error = 'No hay error'
+            response = JsonResponse({'mensaje': mensaje, 'error': error})
+            response.status_code = 201
+            return response
+        else:
+            return redirect('ProsPy:LUCaBatch')
+
+
+
+class LUCaPrediccion(TemplateView):
+    template_name = 'tabla_caprediccion.html'
+
+class CaPrediccionlista(ListView):
+    model = CaPrediccion
+    context_object_name = 'caprediccion'
+
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            return HttpResponse(serialize('json', self.model.objects.all()), 'aplication/json')
+        else:
+            return redirect('ProsPy:LUCaPrediccion')
+
+class GuardarCaPrediccion(CreateView):
+    model = CaPrediccion
+    form_class = CaPrediccionForm
+    template_name = 'registro_caprediccion_modal.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} guardado correctamente'
+                error = 'No hay error'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se pudo guardar correctamente'
+                error = 'no se pudo guardar'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('ProsPy:TiempoCultivo')
+
+class EditarCaPrediccion(UpdateView):
+    model = CaPrediccion
+    form_class = CaPrediccionForm
+    template_name = 'editar_caprediccion_modal.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST, instance=self.get_object())
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} actualizado correctamente'
+                error = 'No hay error'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se pudo actualizar correctamente'
+                error = form.errors
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('ProsPy:LUCaPrediccion')
+
+class EliminarCaPrediccion(DeleteView):
+    model = CaPrediccion
+    template_name = 'eliminar_caprediccion_modal.html'
+
+    def delete(self, request, pk):
+        if request.is_ajax():
+            dat = CaPrediccion.objects.get(id=pk)
+            dat.delete()
+            mensaje = f'{self.model.__name__} Eliminado correctamente'
+            error = 'No hay error'
+            response = JsonResponse({'mensaje': mensaje, 'error': error})
+            response.status_code = 201
+            return response
+        else:
+            return redirect('ProsPy:LUCaPrediccion')
 

@@ -21,34 +21,29 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Listado reactores</h3>
+                    <h3 class="card-title">Listado prediccion de tiempo.</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <div id="tablareactor_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                        <table id="tablareactor" class="table">
+                    <div id="tablaprediccion_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                        <table id="tablaprediccion" class="table">
                             <thead>
-                            <div class="row">
-                                <div class="col-xs-12 col-md-8"></div>
-                                <div class="col-xs-6 col-md-4">
-                                    <button type="submit" class="btn btn-block btn-outline-info"
-                                            onclick="abrir_modal_guardar('{% url 'ProsPy:GuardarReactor' %}');">
-                                        Registrar
-                                    </button>
-                                </div>
-                            </div>
                             <tr>
                                 <th><i class="fa fa-bullhorn"></i>#</th>
-                                <th><i class="fa  "></i> Marca</th>
-                                <th><i class="fa  "></i> Modelo</th>
-                                <th><i class="fa  "></i> Especificacion</th>
-                                <th><i class="fa  "></i> Foto1</th>
-                                <th><i class="fa  "></i> Foto2</th>
-                                <th><i class="fa  "></i> Foto3</th>
-                                <th><i class="fa  "></i> Foto4</th>
-                                <th><i class="fa  "></i> Estado</th>
-                                <th><i class="fa  "></i> TipoReactor</th>
-                                <th><i class="fa  "></i> Opciones</th>
+                                <th><i class="fa "></i> Titulo</th>
+                                <th><i class="fa "></i> Descripcion</th>
+                                <th><i class="fa "></i> X</th>
+                                <th><i class="fa "></i> V</th>
+                                <th><i class="fa "></i> So</th>
+                                <th><i class="fa "></i> Umax</th>
+                                <th><i class="fa "></i> Y</th>
+                                <th><i class="fa "></i> Sf</th>
+                                <th><i class="fa "></i> Tb</th>
+                                <th><i class="fa "></i>Organismo</th>
+                                <th><i class="fa "></i>Reactor</th>
+                                <th><i class="fa "></i>Usuario</th>
+                                <th><i class="fa "></i>Opciones</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -61,13 +56,9 @@
         </div>
     </div>
 
-
-    <div class="modal fade" id="registro_modal">
-    </div>
-    <div class="modal fade" id="eliminar_modal">
-    </div>
     <div class="modal fade" id="editar_modal">
     </div>
+    <div class="modal fade" id="eliminar_modal">
 
 
 {% endblock %}
@@ -100,4 +91,3 @@
     <script src="{% static 'sweetalert2/sweetalert2.min.js' %}"></script>
 
 {% endblock extrajs %}
-

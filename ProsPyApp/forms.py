@@ -119,7 +119,7 @@ class CaBatchForm(forms.ModelForm):
         fields = '__all__'
 
 
-class PrediccionForm(forms.ModelForm):
+class CaPrediccionForm(forms.ModelForm):
     titulo = forms.CharField(label='Titulo',widget=forms.TextInput(attrs={'class': 'form-sma form-sma-titu', 'float': 'left'}))
     descripcion = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-sma form-sma-titu', "rows": 5, "cols": 20}))
     x = forms.FloatField(label='X', widget=forms.TextInput(attrs={'class': 'form-sma'}))

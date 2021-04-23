@@ -136,9 +136,11 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-primary float-right">Guardar
+                    <button type="button" onclick="abrir_modal_prediccion('{% url 'ProsPy:GuardarCaPrediccion' %}','{{ user.username }}');"
+                            class="btn btn-primary float-right">Guardar
                     </button>
                 </div>
+
             </form>
         </div>
 
@@ -149,25 +151,30 @@
     <div class="col-md-8">
         <!-- Form Element sizes -->
         <div class="card card-success">
-
             <div class="showback">
                 <div id="predicctiempo">
                 </div>
             </div>
-            <!-- /.card -->
-
-
         </div>
-        <!--/.col (right) -->
+
     </div>
+
+     <div class="modal fade" id="reactor_modal">
+    </div>
+
 
 {% endblock %}
 
 {% block extrajs %}
 
-
     <script src="{% static 'ajax.js' %}"></script>
     <script src="{% static 'predicciontiempo.js' %}"></script>
     <script src="{% static 'modal.js' %}"></script>
 
+    <!-- Bootstrap 4 -->
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'dist/js/demo.js' %}"></script>
+
+    <link href="{% static 'sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'sweetalert2/sweetalert2.min.js' %}"></script>
 {% endblock extrajs %}

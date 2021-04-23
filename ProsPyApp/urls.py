@@ -33,11 +33,19 @@ urlpatterns = [
     path('Reactorlista/', login_required(views.Reactorlista.as_view()), name='Reactorlista'),
     path('GuardarReactor/', login_required(views.GuardarReactor.as_view()), name='GuardarReactor'),
     path('EditarReactor/<int:pk>/', login_required(views.EditarReactor.as_view()), name='EditarReactor'),
+    path('EliminarReactor/<int:pk>/', login_required(views.EliminarReactor.as_view()), name='EliminarReactor'),
 
     path('LUCaBatch/', login_required(views.LUCaBatch.as_view()), name='LUCaBatch'),
     path('CaBatchlista/', login_required(views.CaBatchlista.as_view()), name='CaBatchlista'),
     path('GuardarCaBatch/', login_required(views.GuardarCaBatch.as_view()), name='GuardarCaBatch'),
     path('EditarCaCaBatch/<int:pk>/', login_required(views.EditarCaCaBatch.as_view()), name='EditarCaCaBatch'),
+    path('EliminarCaCaBatch/<int:pk>/', login_required(views.EliminarCaCaBatch.as_view()), name='EliminarCaCaBatch'),
+
+    path('LUCaPrediccion/', login_required(views.LUCaPrediccion.as_view()), name='LUCaPrediccion'),
+    path('CaPrediccionlista/', login_required(views.CaPrediccionlista.as_view()), name='CaPrediccionlista'),
+    path('GuardarCaPrediccion/', login_required(views.GuardarCaPrediccion.as_view()), name='GuardarCaPrediccion'),
+    path('EditarCaPrediccion/<int:pk>/', login_required(views.EditarCaPrediccion.as_view()), name='EditarCaPrediccion'),
+    path('EliminarCaPrediccion/<int:pk>/', login_required(views.EliminarCaPrediccion.as_view()), name='EliminarCaPrediccion'),
 
     path('CrearUsuario/', views.CrearUsuario.as_view(), name=' CrearUsuario'),
     path('CambiarContraseña', login_required(views.CambiarContraseña), name='CambiarContraseña'),

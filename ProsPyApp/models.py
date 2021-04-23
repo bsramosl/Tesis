@@ -86,7 +86,7 @@ class CaPrediccion(models.Model):
     so = models.FloatField(max_length=10, blank=False, null=False)
     umax = models.FloatField(max_length=10, blank=False, null=False)
     y = models.FloatField(max_length=10, blank=False, null=False)
-    ysf = models.FloatField(max_length=10, blank=False, null=False)
+    sf = models.FloatField(max_length=10, blank=False, null=False)
     tb = models.FloatField(max_length=10, blank=False, null=False)
     reactor = models.ForeignKey(Reactor, on_delete=models.CASCADE)
     organismo = models.ForeignKey(Organismo, on_delete=models.CASCADE)

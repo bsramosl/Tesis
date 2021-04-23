@@ -78,13 +78,30 @@ function abrir_modal_reactor(url, usuario) {
         $('#id_x').val($('#X').val()).prop('readonly', true);
         $("#id_usuario option:contains(" + usuario + ")").prop('selected', 'selected');
         $('#id_usuario option:not(:selected)').prop('disabled', true);
-
-
         console.log(usuario)
-
     });
 }
 
+function abrir_modal_prediccion(url, usuario) {
+    $('#reactor_modal').load(url, function () {
+        $(this).modal('show');
+        $('#id_x').val($('#X').val()).prop('readonly', true);
+        $('#id_v').val($('#V').val()).prop('readonly', true);
+        $('#id_so').val($('#So').val()).prop('readonly', true);
+        $('#id_umax').val($('#Umax').val()).prop('readonly', true);
+        $('#id_y').val($('#Y').val()).prop('readonly', true);
+        $('#id_sf').val($('#Sf').val()).prop('readonly', true);
+        $('#id_tb').val($('#Tb').val()).prop('readonly', true);
+        $("#id_usuario option:contains(" + usuario + ")").prop('selected', 'selected');
+        $('#id_usuario option:not(:selected)').prop('disabled', true);
+        console.log(usuario)
+    });
+}
+
+
+function cerrar_modal_prediccion() {
+    $('#reactor_modal').modal('hide');
+}
 
 function cerrar_modal_guardar() {
     $('#registro_modal').modal('hide');
