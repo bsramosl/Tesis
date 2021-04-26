@@ -20,8 +20,8 @@
                 <div class="card-body">
                     <div class="row">
 
-                        {% if object_list %}
-                            {% for prediccion in object_list %}
+                        {% if prediccion %}
+                            {% for tiempo in prediccion %}
                                 <div class="col-md-4">
                                     <!-- Widget: user widget style 1 -->
                                     <div class="card card-widget widget-user shadow">
@@ -29,14 +29,15 @@
                                         <div class="widget-user-header bg-info">
                                             <h3 class="widget-user-username"><font
                                                     style="vertical-align: inherit;"><font
-                                                    style="vertical-align: inherit;">Titulo: {{ prediccion.titulo }}</font></font>
+                                                    style="vertical-align: inherit;">Titulo: {{ tiempo.titulo }}</font></font>
                                             </h3>
                                             <h5 class="widget-user-desc"><font style="vertical-align: inherit;"><font
-                                                    style="vertical-align: inherit;">Tipo Reactor: {{ prediccion.reactor.tiporeactor.tiporeactor}}</font></font>
+                                                    style="vertical-align: inherit;">Tipo
+                                                Reactor: {{ tiempo.reactor.tiporeactor.tiporeactor }}</font></font>
                                             </h5>
                                         </div>
                                         <div class="widget-user-image">
-                                            <img class="img-circle elevation-2" src="{{ prediccion.reactor.foto1.url }}"
+                                            <img class="img-circle elevation-2" src="{{ tiempo.reactor.foto1.url }}"
                                                  alt="Avatar de usuario">
                                         </div>
                                         <div class="card-footer">
@@ -45,10 +46,11 @@
                                                     <div class="description-block">
                                                         <h5 class="description-header"><font
                                                                 style="vertical-align: inherit;"><font
-                                                                style="vertical-align: inherit;">Reactor</font></font></h5>
+                                                                style="vertical-align: inherit;">Reactor</font></font>
+                                                        </h5>
                                                         <span class="description-text"><font
                                                                 style="vertical-align: inherit;"><font
-                                                                style="vertical-align: inherit;">{{ prediccion.reactor }}</font></font></span>
+                                                                style="vertical-align: inherit;">{{ tiempo.reactor }}</font></font></span>
                                                     </div>
                                                     <!-- /.description-block -->
                                                 </div>
@@ -61,7 +63,7 @@
                                                         </h5>
                                                         <span class="description-text"><font
                                                                 style="vertical-align: inherit;"><font
-                                                                style="vertical-align: inherit;">{{ prediccion.organismo.nombrecientifico }}</font></font></span>
+                                                                style="vertical-align: inherit;">{{ tiempo.organismo.nombrecientifico }}</font></font></span>
                                                     </div>
                                                     <!-- /.description-block -->
                                                 </div>
@@ -70,10 +72,11 @@
                                                     <div class="description-block">
                                                         <h5 class="description-header"><font
                                                                 style="vertical-align: inherit;"><font
-                                                                style="vertical-align: inherit;">35</font></font></h5>
+                                                                style="vertical-align: inherit;">Prediccion</font></font>
+                                                        </h5>
                                                         <span class="description-text"><font
                                                                 style="vertical-align: inherit;"><font
-                                                                style="vertical-align: inherit;">PRODUCTOS</font></font></span>
+                                                                style="vertical-align: inherit;">{{ tiempo.usuario }}</font></font></span>
                                                     </div>
                                                     <!-- /.description-block -->
                                                 </div>
@@ -84,10 +87,77 @@
                                     </div>
                                     <!-- /.widget-user -->
                                 </div>
-
                             {% endfor %}
-                        {% else %}
-                            <h1>No hay datos</h1>
+                        {% endif %}
+
+                        {% if batch %}
+                            {% for bact in batch %}
+                                <div class="col-md-4">
+                                    <!-- Widget: user widget style 1 -->
+                                    <div class="card card-widget widget-user shadow">
+                                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                                        <div class="widget-user-header bg-info">
+                                            <h3 class="widget-user-username"><font
+                                                    style="vertical-align: inherit;"><font
+                                                    style="vertical-align: inherit;">Titulo: {{ bact.titulo }}</font></font>
+                                            </h3>
+                                            <h5 class="widget-user-desc"><font style="vertical-align: inherit;"><font
+                                                    style="vertical-align: inherit;">Tipo
+                                                Reactor: {{ bact.reactor.tiporeactor.tiporeactor }}</font></font>
+                                            </h5>
+                                        </div>
+                                        <div class="widget-user-image">
+                                            <img class="img-circle elevation-2" src="{{ bact.reactor.foto1.url }}"
+                                                 alt="Avatar de usuario">
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="row">
+                                                <div class="col-sm-4 border-right">
+                                                    <div class="description-block">
+                                                        <h5 class="description-header"><font
+                                                                style="vertical-align: inherit;"><font
+                                                                style="vertical-align: inherit;">Reactor</font></font>
+                                                        </h5>
+                                                        <span class="description-text"><font
+                                                                style="vertical-align: inherit;"><font
+                                                                style="vertical-align: inherit;">{{ bact.reactor }}</font></font></span>
+                                                    </div>
+                                                    <!-- /.description-block -->
+                                                </div>
+                                                <!-- /.col -->
+                                                <div class="col-sm-4 border-right">
+                                                    <div class="description-block">
+                                                        <h5 class="description-header"><font
+                                                                style="vertical-align: inherit;"><font
+                                                                style="vertical-align: inherit;">Organismo</font></font>
+                                                        </h5>
+                                                        <span class="description-text"><font
+                                                                style="vertical-align: inherit;"><font
+                                                                style="vertical-align: inherit;">{{ bact.organismo.nombrecientifico }}</font></font></span>
+                                                    </div>
+                                                    <!-- /.description-block -->
+                                                </div>
+                                                <!-- /.col -->
+                                                <div class="col-sm-4">
+                                                    <div class="description-block">
+                                                        <h5 class="description-header"><font
+                                                                style="vertical-align: inherit;"><font
+                                                                style="vertical-align: inherit;">Batch</font></font>
+                                                        </h5>
+                                                        <span class="description-text"><font
+                                                                style="vertical-align: inherit;"><font
+                                                                style="vertical-align: inherit;">{{ bact.usuario }}</font></font></span>
+                                                    </div>
+                                                    <!-- /.description-block -->
+                                                </div>
+                                                <!-- /.col -->
+                                            </div>
+                                            <!-- /.row -->
+                                        </div>
+                                    </div>
+                                    <!-- /.widget-user -->
+                                </div>
+                            {% endfor %}
                         {% endif %}
 
 

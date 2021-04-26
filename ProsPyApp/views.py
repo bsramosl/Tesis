@@ -572,7 +572,7 @@ class EliminarCaPrediccion(DeleteView):
             return redirect('ProsPy:LUCaPrediccion')
 
 
-class EjerciciosLista(ListView):
+class EjerciciosListaasd(ListView):
     model = CaPrediccion
     template_name = 'ejercicios.html'
 
@@ -586,3 +586,12 @@ class EjerciciosLista(ListView):
         context = super().get_context_data(**kwargs)
         context['activos'] = activo
         return context
+
+
+class EjerciciosLista(TemplateView):
+    template_name = 'ejercicios.html'
+
+    def get_context_data(self, *args, **kwargs):
+        prediccion = CaPrediccion.objects.filter(usuario = self.request.user)
+        batch = CaBatch.objects.filter(usuario = self.request.user)
+        return {'prediccion': prediccion, 'batch': batch}
